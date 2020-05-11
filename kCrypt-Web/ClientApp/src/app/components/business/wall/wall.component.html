@@ -1,0 +1,191 @@
+<div class="content-wrapper">
+    <div class="content">
+
+        <!-- Inner container -->
+        <div class="d-md-flex align-items-md-start">
+
+            <!-- Left sidebar component -->
+            <div
+                class="sidebar sidebar-light sidebar-component sidebar-component-left bg-transparent border-0 shadow-0 sidebar-expand-md">
+
+                <!-- Sidebar content -->
+                <div class="sidebar-content">
+
+                    <!-- Sidebar search -->
+                    <!-- <div class="card">
+                        <div class="card-header bg-transparent header-elements-inline">
+                            <span class="text-uppercase font-size-sm font-weight-semibold">Acciones</span>
+
+
+                        </div>
+
+                        <div class="card-body">
+                            <form action="#">
+                                <div class="form-group form-group-feedback form-group-feedback-left">
+                                    <input type="search" class="form-control" placeholder="Grupo">
+                                    <div class="form-control-feedback">
+                                        <i class="icon-pencil font-size-base text-muted"></i>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn bg-blue btn-block">
+                                    <i class="icon-search4 font-size-base mr-2"></i>
+                                    Buscar
+                                </button>
+                            </form>
+                        </div>
+                    </div> -->
+                    <!-- /sidebar search -->
+
+
+                    <!-- Sub navigation -->
+                    <div class="card">
+                        <div class="card-header bg-transparent header-elements-inline">
+                            <span class="text-uppercase font-size-sm font-weight-semibold">Grupos</span>
+                            <div class="header-elements">
+                                <span class="badge bg-success align-self-start ml-3 cursor-pointer"
+                                    (click)="openGroupModal(null)">
+                                    <i class="icon-plus3 font-size-base"></i>
+                                    nuevo
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="card-body p-1">
+                            <ul class="nav nav-sidebar">
+                                <li class="media" *ngFor="let item of model.groups"
+                                    [ngClass]="item.Id === model.groupSelected.Id ? 'menu-active' : ''">
+                                    <div class="media-body">
+                                        <a href="#" class="nav-link" (click)="groupSelect(item)">
+                                            <i class="icon-googleplus5"></i>{{ item.Name }}
+                                        </a>
+
+                                    </div>
+
+                                    <div class="ml-3 align-self-center">
+                                        <div class="dropdown">
+                                            <a href="#" class="text-default dropdown-toggle caret-0"
+                                                data-toggle="dropdown" aria-expanded="false"><i
+                                                    class="icon-more2"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-right" x-placement="top-end"
+                                                style="position: absolute; transform: translate3d(-164px, -181px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                <a href="#" class="dropdown-item" (click)="openGroupModal(item)"><i
+                                                        class="icon-pencil7"></i> Editar</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a href="#" class="dropdown-item" (click)="deleteGroup(item)"><i
+                                                        class="icon-trash"></i> Eliminar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sub navigation -->
+
+                </div>
+                <!-- /sidebar content -->
+
+            </div>
+            <!-- /left sidebar component -->
+
+
+            <!-- Right content -->
+            <div class="w-100">
+
+                <div class="card">
+
+                    <div class="card-header bg-transparent header-elements-inline">
+                        <div class="col-6">
+                            <span class="text-uppercase font-size-sm font-weight-semibold">Subgrupos de:
+                                {{ model.groupSelected.Name }}</span>
+                        </div>
+                        <div class="col-4 text-right pr-0" *ngIf="model.groupSelected.Id">
+                            <div class="form-group-feedback form-group-feedback-right">
+                                <input type="search" class="form-control wmin-md-150" [(ngModel)]="model.textFindSubGroup" placeholder="Buscar">
+                                <div class="form-control-feedback">
+                                    <i class="icon-search4 font-size-sm text-muted"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-2" *ngIf="model.groupSelected.Id">
+                            <span class="badge bg-success align-self-start ml-3 cursor-pointer"
+                                (click)="openSubGroupModal(model.groupSelected, null)">
+                                <i class="icon-plus3 font-size-base"></i>
+                                nuevo
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table text-nowrap">
+                            <tbody *ngFor="let subgroup of getSubGroups(model.groupSelected.Id)">
+                                <tr class="table-active table-border-double" [hidden]="!IsFind(subgroup)">
+                                    <td colspan="2">{{ getSubGroupFormat(subgroup.IdSubGroupFormat).Name }}:
+                                        {{ subgroup.Name }}
+                                    </td>
+                                    <td class="text-right">
+                                        <div class="list-icons">
+                                            <div class="dropdown">
+                                                <a href="#" class="list-icons-item dropdown-toggle caret-0"
+                                                    data-toggle="dropdown" aria-expanded="false">
+                                                    <i class="icon-menu7"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right" x-placement="top-end"
+                                                    style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-164px, -180px, 0px);">
+                                                    <a href="#" class="dropdown-item"
+                                                        (click)="openSubGroupModal(model.groupSelected, subgroup)"><i
+                                                            class="icon-gear"></i>
+                                                        Editar</a>
+
+                                                    <!-- <a href="#" class="dropdown-item"><i class="icon-file-stats"></i>
+                                                        Compartir </a> -->
+                                                    <div class="dropdown-divider"></div>
+                                                    <a href="#" class="dropdown-item"
+                                                        (click)="deleteSubGroup(subgroup)">
+                                                        <i class="icon-file-stats"></i>
+                                                        Eliminar </a>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let field of subgroup.Fields" [hidden]="!IsFind(subgroup)">
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="mr-3">
+
+                                            </div>
+                                            <div>
+                                                <a href="#"
+                                                    class="text-default font-weight-semibold">{{ field.Name }}</a>
+                                                <div class="text-muted font-size-sm">
+                                                    {{ field.IsEncrypted ? truncateValue(field.Encrypted) : truncateValue(field.Value) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="minimun-width">
+                                        <span class="badge" [ngClass]="field.IsEncrypted ? 'bg-danger' : 'bg-grey-400'">
+                                            {{ field.IsEncrypted ? 'Encripado' : 'Visible' }}
+                                        </span>
+                                    </td>
+                                    <td class="minimun-width">
+                                        <a href="#" class="nav-link" (click)="copyField(field)">
+                                            <i class="icon-file-text2 mr-2"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /right content -->
+
+        </div>
+        <!-- /inner container -->
+
+    </div>
+</div>

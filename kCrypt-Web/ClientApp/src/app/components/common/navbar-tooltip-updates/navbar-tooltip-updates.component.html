@@ -1,0 +1,39 @@
+<li class="nav-item dropdown">
+    <a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown">
+        <i class="icon-git-compare"></i>
+        <span class="d-md-none ml-2">Git updates</span>
+        <span class="badge badge-pill bg-warning-400 ml-auto ml-md-0">{{ model.updates.length }}</span>
+    </a>
+
+    <div class="dropdown-menu dropdown-content wmin-md-350">
+        <div class="dropdown-content-header">
+            <span class="font-weight-semibold">Git updates</span>
+            <a href="#" class="text-default"><i class="icon-sync"></i></a>
+        </div>
+
+        <div class="dropdown-content-body dropdown-scrollable">
+            <ul class="media-list">
+
+                <li class="media" *ngFor="let update of model.updates">
+                    <div class="mr-3">
+                        <img [src]="update.pathIcon" width="36" height="36" class="rounded-circle" alt="">
+                    </div>
+
+                    <div class="media-body">
+                        {{ update.message }}
+                        <div class="text-muted font-size-sm">{{ update.date }}</div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="dropdown-content-footer bg-light">
+            <a href="#" class="text-grey mr-auto">All updates</a>
+            <div>
+                <a href="#" class="text-grey" data-popup="tooltip" title="" data-original-title="Mark all as read"><i class="icon-radio-unchecked"></i></a>
+                <a href="#" class="text-grey ml-2" data-popup="tooltip" title="" data-original-title="Bug tracker"><i class="icon-bug2"></i></a>
+            </div>
+        </div>
+    </div>
+</li>

@@ -1,0 +1,240 @@
+<div class="content-wrapper">
+    <div class="content">
+
+        <!-- Inner container -->
+        <div class="d-md-flex align-items-md-start">
+
+            <!-- Left sidebar component -->
+            <div
+                class="sidebar sidebar-light sidebar-component sidebar-component-left bg-transparent border-0 shadow-0 sidebar-expand-md">
+
+                <!-- Sidebar content -->
+                <div class="sidebar-content">
+
+                    <!-- Sidebar search -->
+                    <!-- <div class="card">
+                        <div class="card-header bg-transparent header-elements-inline">
+                            <span class="text-uppercase font-size-sm font-weight-semibold">Acciones</span>
+                        </div>
+
+                        <div class="card-body">
+                            <form action="#">
+                                <div class="form-group form-group-feedback form-group-feedback-left">
+                                    <input type="search" class="form-control" placeholder="Grupo">
+                                    <div class="form-control-feedback">
+                                        <i class="icon-pencil font-size-base text-muted"></i>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn bg-blue btn-block">
+                                    <i class="icon-search4 font-size-base mr-2"></i>
+                                    Buscar
+                                </button>
+                            </form>
+                        </div>
+                    </div> -->
+                    <!-- /sidebar search -->
+
+
+                    <!-- Sub navigation -->
+                    <div class="card">
+
+                        <div class="card-header bg-transparent header-elements-inline">
+                            <span class="text-uppercase font-size-sm font-weight-semibold">Formatos</span>
+                            <div class="header-elements">
+                                <span class="badge bg-success align-self-start ml-3 cursor-pointer"
+                                    (click)="openSubGroupFormatModal(null)">
+                                    <i class="icon-plus3 font-size-base"></i>
+                                    nuevo
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- <div class="card-body p-0">
+                            <ul class="nav nav-sidebar" data-nav-type="accordion">
+                                <li class="nav-item" *ngFor="let item of model.subgroupFormats">
+                                    <a href="#/formats" class="nav-link" (click)="subgroupFormatSelect(item)">
+                                        <i class="icon-googleplus5"></i>{{ item.Name }}
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </div> -->
+
+                        <div class="card-body p-1">
+                            <ul class="nav nav-sidebar">
+                                <li class="media"  *ngFor="let item of model.subgroupFormats" 
+                                [ngClass]="item.Id === model.subgroupFormatSelected.Id ? 'menu-active' : ''">
+                                    <div class="media-body">
+                                        <a href="#/formats" class="nav-link" 
+                                            (click)="subgroupFormatSelect(item)">
+                                            <i class="icon-googleplus5"></i>{{ item.Name }}
+                                        </a>
+                                    </div>
+    
+                                    <div class="ml-3 align-self-center">
+                                        <div class="dropdown">
+                                            <a href="#" class="text-default dropdown-toggle caret-0" data-toggle="dropdown" aria-expanded="false"><i class="icon-more2"></i></a>
+                                            <div class="dropdown-menu dropdown-menu-right" x-placement="top-end" style="position: absolute; transform: translate3d(-164px, -181px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                <a href="#/formats" class="dropdown-item" (click)="openSubGroupFormatModal(item)"><i class="icon-pencil7"></i> Editar</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a href="#/formats" class="dropdown-item"(click)="deleteSubGroupFormat(item)"><i class="icon-trash"></i> Eliminar</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- /sub navigation -->
+
+                </div>
+                <!-- /sidebar content -->
+
+            </div>
+            <!-- /left sidebar component -->
+
+
+            <!-- Right content -->
+            <div class="w-100">
+
+                <div class="card">
+                    <div class="card-header bg-transparent header-elements-inline">
+                        <span class="text-uppercase font-size-sm font-weight-semibold">Formato de:
+                            {{ model.subgroupFormatSelected.Name }}</span>
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="table text-nowrap">
+                            <tbody>
+                                <tr class="table-active table-border-double">
+                                    <td colspan="4">Lista de campos</td>
+                                    <td class="text-right">
+                                    </td>
+                                </tr>
+                                <tr *ngFor="let field of model.subgroupFormatSelected.Fields; let i = index">
+                                    <td class="minimun-width">{{ i+1 }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center" *ngIf="!field.IsNewField">
+                                            <div>
+                                                <a href="#"
+                                                    class="text-default font-weight-semibold">{{ field.Name }}</a>
+                                                <div class="text-muted font-size-sm">
+                                                    {{ field.TextHelp }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="field.IsNewField">
+                                            <div class="col-lg-12 pl-0 pr-0">
+                                                <input type="text" class="form-control" [(ngModel)]="field.Name"
+                                                    placeholder="Ingrese nombre del campo">
+                                            </div>
+                                            <!-- <div class="col-lg-12">
+                                                <input type="text" class="form-control" [(ngModel)]="field.TextHelp"
+                                                    placeholder="Ingrese un texto de ayuda">
+                                            </div> -->
+                                        </div>
+                                    </td>
+                                    <td class="minimun-width">
+                                        <span class="badge" [ngClass]="field.IsEncrypted ? 'bg-danger' : 'bg-grey-400'"
+                                            *ngIf="!field.IsNewField">
+                                            {{ field.IsEncrypted ? 'Encripado' : 'Visible' }}
+                                        </span>
+
+                                        <div *ngIf="field.IsNewField">
+                                            <label class="col-form-label text-muted">Encriptar&nbsp;</label>
+                                            <span
+                                                [ngClass]="field.IsEncrypted ? 'icon-checkbox-checked' : 'icon-checkbox-unchecked'"
+                                                style="font-weight: bold; cursor: pointer; color: green;"
+                                                (click)="field.IsEncrypted = !field.IsEncrypted;"></span>
+                                        </div>
+                                    </td>
+                                    <td class="minimun-width">
+                                        <span class="badge" [ngClass]="field.IsPassword ? 'bg-danger' : 'bg-grey-400'"
+                                            *ngIf="!field.IsNewField">
+                                            {{ field.IsPassword ? 'Password' : 'Texto plano' }}
+                                        </span>
+
+                                        <div *ngIf="field.IsNewField">
+                                            <label class="col-form-label text-muted">Password&nbsp;</label>
+                                            <span
+                                                [ngClass]="field.IsPassword ? 'icon-checkbox-checked' : 'icon-checkbox-unchecked'"
+                                                style="font-weight: bold; cursor: pointer; color: green;"
+                                                (click)="field.IsPassword = !field.IsPassword;"></span>
+                                        </div>
+                                    </td>
+                                    <td class="minimun-width">
+                                        <div class="list-icons">
+                                            <div class="dropdown" *ngIf="!field.IsNewField">
+                                                <a href="#" class="list-icons-item dropdown-toggle caret-0"
+                                                    data-toggle="dropdown" aria-expanded="false">
+                                                    <i class="icon-menu7"></i></a>
+                                                <div class="dropdown-menu dropdown-menu-right" x-placement="top-end"
+                                                    style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-164px, -180px, 0px);">
+                                                    <a href="#/formats" class="dropdown-item"
+                                                        (click)="editField(field)"><i class="icon-file-stats"></i>
+                                                        Editar </a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a href="#/formats" class="dropdown-item"
+                                                        (click)="deleteField(model.subgroupFormatSelected, field)"><i
+                                                            class="icon-gear"></i>
+                                                        Eliminar</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="dropdown" *ngIf="field.IsNewField">
+                                                <a href="#/formats" class="list-icons-item caret-0"
+                                                    aria-expanded="false"
+                                                    title="Guardar"
+                                                    (click)="saveField(model.subgroupFormatSelected, field)">
+                                                    <i class="icon-floppy-disk"></i>
+                                                </a>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <a href="#/formats" class="list-icons-item caret-0"
+                                                    aria-expanded="false"
+                                                    title="Cancelar"
+                                                    (click)="cancelSaveField()">
+                                                    <i class="icon-cancel-circle2"></i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr [hidden]="existNewField()">
+                                    <td class="minimun-width">
+
+                                    </td>
+                                    <td class="minimun-width">
+                                        <a href="#" class="text-default font-weight-semibold">Ingresar nuevo campo</a>
+                                        <div class="text-muted font-size-sm">
+                                            Para agregar un nuevo campo, haga click en el icono
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                    <td>
+                                        <div class="list-icons">
+                                            <div class="dropdown">
+                                                <a href="#/formats" class="list-icons-item caret-0"
+                                                    aria-expanded="false" (click)="newField()">
+                                                    <i class="icon-plus-circle2 bg-success"></i>
+                                                </a>
+
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+            <!-- /right content -->
+
+        </div>
+        <!-- /inner container -->
+
+    </div>
+</div>

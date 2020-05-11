@@ -1,0 +1,9 @@
+<li class="nav-item dropdown">
+    <a href="#" class="navbar-nav-link dropdown-toggle caret-0" data-toggle="dropdown" (click)="reset()">
+        <i class="icon-alarm"></i>
+        <span class="d-md-none ml-2">Messages</span>
+        <span class="badge badge-pill ml-auto ml-md-0" [ngClass]="getColor(model.counter)" [textContent]="model.minutes">
+            
+        </span>
+    </a>
+</li>
