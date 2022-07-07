@@ -23,7 +23,7 @@
     "@types/crypto-js": "^3.1.45",
     "crypto-js": "^4.0.0",
     "jwt-decode": "^2.2.0",
-    "moment": "^2.25.1",
+    "moment": "^2.29.4",
     "ngx-cookie-service": "^2.4.0",
     "ngx-filter-pipe": "^2.1.2",
     "powerbi-client": "^2.11.0",
